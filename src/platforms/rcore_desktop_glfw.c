@@ -1698,6 +1698,16 @@ void ClosePlatform(void)
 #endif
 }
 
+int InitPlatformWithImGui(void)
+{
+    return 0;
+}
+
+void ClosePlatformWithImGui(void)
+{
+    return;
+}
+
 // GLFW3 Error Callback, runs on GLFW3 error
 static void ErrorCallback(int error, const char *description)
 {

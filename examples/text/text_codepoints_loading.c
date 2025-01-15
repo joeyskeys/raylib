@@ -19,7 +19,7 @@
 // Text to be displayed, must be UTF-8 (save this code file as UTF-8)
 // NOTE: It can contain all the required text for the game,
 // this text will be scanned to get all the required codepoints
-static char *text = "いろはにほへと　ちりぬるを\nわかよたれそ　つねならむ\nうゐのおくやま　けふこえて\nあさきゆめみし　ゑひもせす";
+static char *text = "test";
 
 // Remove codepoint duplicates if requested
 static int *CodepointRemoveDuplicates(int *codepoints, int codepointCount, int *codepointResultCount);

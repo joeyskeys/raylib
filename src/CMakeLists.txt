@@ -43,6 +43,21 @@ if (NOT ${PLATFORM} MATCHES "Web")
     include(GlfwImport)
 endif ()
 
+# <root>/src/external/imgui contains the imgui library source code
+option(WITH_IMGUI "Whether to build with imgui" ON)
+if (WITH_IMGUI)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/imgui)
+endif()
+
+set(imgui_sources
+    external/imgui/imgui.cpp
+    external/imgui/imgui_demo.cpp
+    external/imgui/imgui_draw.cpp
+    external/imgui/imgui_widgets.cpp
+    external/imgui/backends/imgui_impl_glfw.cpp
+    external/imgui/backends/imgui_impl_opengl3.cpp
+    )
+
 # Sets additional platform options and link libraries for each platform
 # also selects the proper graphics API and version for that platform
 # Produces a variable LIBS_PRIVATE that will be used later
@@ -54,7 +69,11 @@ else ()
     MESSAGE(STATUS "Audio Backend: None (-DCUSTOMIZE_BUILD=ON -DSUPPORT_MODULE_RAUDIO=OFF)")
 endif ()
 
-add_library(raylib ${raylib_sources} ${raylib_public_headers})
+if (WITH_IMGUI)
+    add_library(raylib ${raylib_sources} ${raylib_public_headers} ${imgui_sources})
+else()
+    add_library(raylib ${raylib_sources} ${raylib_public_headers})
+endif()
 
 if (NOT BUILD_SHARED_LIBS)
     MESSAGE(STATUS "Building raylib static library")
