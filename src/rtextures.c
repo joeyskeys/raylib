@@ -42,7 +42,7 @@
 *
 *   LICENSE: zlib/libpng
 *
-*   Copyright (c) 2013-2024 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2013-2025 Ramon Santamaria (@raysan5)
 *
 *   This software is provided "as-is", without any express or implied warranty. In no event
 *   will the authors be held liable for any damages arising from the use of this software.
@@ -761,7 +761,7 @@ bool ExportImageAsCode(Image image, const char *fileName)
     byteCount += sprintf(txtData + byteCount, "// more info and bugs-report:  github.com/raysan5/raylib                              //\n");
     byteCount += sprintf(txtData + byteCount, "// feedback and support:       ray[at]raylib.com                                      //\n");
     byteCount += sprintf(txtData + byteCount, "//                                                                                    //\n");
-    byteCount += sprintf(txtData + byteCount, "// Copyright (c) 2018-2024 Ramon Santamaria (@raysan5)                                //\n");
+    byteCount += sprintf(txtData + byteCount, "// Copyright (c) 2018-2025 Ramon Santamaria (@raysan5)                                //\n");
     byteCount += sprintf(txtData + byteCount, "//                                                                                    //\n");
     byteCount += sprintf(txtData + byteCount, "////////////////////////////////////////////////////////////////////////////////////////\n\n");
 
@@ -833,10 +833,7 @@ Image GenImageGradientLinear(int width, int height, int direction, Color start, 
     // bottom-right or vice-versa), pixel (0, 0) is the farthest point on the gradient
     // (i.e. the pixel which should become one of the gradient's ends color); while for
     // directions that lie in the second or fourth quadrant, that point is pixel (width, 0).
-    float maxPosValue =
-            ((signbit(sinDir) != 0) == (signbit(cosDir) != 0))
-            ? fabsf(startingPos)
-            : fabsf(startingPos+width*cosDir);
+    float maxPosValue = ((signbit(sinDir) != 0) == (signbit(cosDir) != 0))? fabsf(startingPos) : fabsf(startingPos + width*cosDir);
     for (int i = 0; i < width; i++)
     {
         for (int j = 0; j < height; j++)
@@ -4207,8 +4204,10 @@ TextureCubemap LoadTextureCubemap(Image image, int layout)
             ImageFormat(&faces, image.format);
 
             Image mipmapped = ImageCopy(image);
+        #if defined(SUPPORT_IMAGE_MANIPULATION)
             ImageMipmaps(&mipmapped);
             ImageMipmaps(&faces);
+        #endif
 
             // NOTE: Image formatting does not work with compressed textures
 
